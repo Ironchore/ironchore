@@ -1,25 +1,22 @@
 const mongoose = require('mongoose');
 
 const choresSchema = new mongoose.Schema({
-  Title : {
+  title : {
     type: String,
     required: 'The title is required'
   },
-  Avatar : {
+  avatar : {
     type: String,
     required: 'The avatar is required'
   },
-
-  Description: {
+  description: {
     type: String,
     required:'the description is required'
   },
-  Points:{
+  points:{
     type: Number,
     required: 'The Points is required'
   },
-
- 
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -37,5 +34,5 @@ const choresSchema = new mongoose.Schema({
       //return ret;
 
 
-const Comment = mongoose.model('Comment', commentSchema);
-module.exports = Comment;
+const chores = mongoose.model('Comment', commentSchema);
+module.exports = chores;

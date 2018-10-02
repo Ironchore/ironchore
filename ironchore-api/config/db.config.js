@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost/post-book';
+const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost/ironchores';
 
 mongoose.connect(MONGO_URI)
   .then(() => console.info(`Successfully connected to ${MONGO_URI}`))
