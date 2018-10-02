@@ -5,22 +5,26 @@ const choresSchema = new mongoose.Schema({
     type: String,
     required: 'The title is required'
   },
-  avatar : {
-    type: String,
-    required: 'The avatar is required'
-  },
   description: {
     type: String,
-    required:'the description is required'
   },
   points:{
     type: Number,
     required: 'The Points is required'
   },
+  kid : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Kid',
+    required: [true, 'Kid  is required']
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: [true, `needs a User`]
+  },
+  award: {
+    type: mongoose.Schema.Types.ObjectId,
+    default:[]
   }
 });
 
