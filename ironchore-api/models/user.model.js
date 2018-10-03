@@ -12,11 +12,13 @@ const userSchema =  new mongoose.Schema({
     type: String,
     required: true
   }
-}) 
+}, { 
+  timestamps: true,
+  toObject: {
+    virtuals: true
+  }
+});
 
-// falta crear el avatar aqui uno para padre y otro para el hijo
-//unirlo a creacion de tareas.
-//unirlo Creacion de premios
 
 userSchema.pre('save', function save(next) {
   const user = this;
