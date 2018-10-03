@@ -28,15 +28,11 @@ const choresSchema = new mongoose.Schema({
   }
 });
 
-  // Recogido de intener pero no tengo muy claro para que sirve 
   //timestamps: true,
-  //toJSON: {
-    //transform: (doc, ret) => {
-      //ret.id = doc._id;
-      //delete ret._id;
-      //delete ret.__v;      
-      //return ret;
 
 
-const chores = mongoose.model('Comment', commentSchema);
-module.exports = chores;
+const chores = mongoose.model('Chores', choresSchema);
+module.exports = Chores;
+
+
+

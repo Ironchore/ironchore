@@ -17,4 +17,7 @@ const kidSchema = new mongoose.Schema({
     required: [true, `needs a User`]
   }
 
-})
+});
+
+const chores = mongoose.model('Kid', KidSchema);
+module.exports = kid;

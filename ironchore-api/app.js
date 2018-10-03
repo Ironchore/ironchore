@@ -9,6 +9,16 @@ const session = require('express-session');
 const cors = require('cors');
 const app = express();
 
+
+
+require('./config/db.config');
+require('./config/passport.config').setup(passport);
+const corsConfig = require('./config/cors.config');
+
+const usersRouter = require('./routes/users.routes');
+const sessionsRouter = require('./routes/sessions.routes');
+const awardsRouter = require('./routes/awards.routes');
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
