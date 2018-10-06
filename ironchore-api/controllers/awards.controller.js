@@ -1,31 +1,54 @@
-
-const Awards = require('../models/awards.model');
+const Award = require('../models/award.model');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
 
-module.exports.create = (req, res, next) => {
-  const awards = new Awards(req.body);
-  Awards.user = req.user.id;
-  Awards.chores = req.params.userId;
+module.exports.list = (req, res, next) => {
+  Award.find({ user: mongoose.Types.ObjectId(req.params.userId) })
+    .then(awards => res.json(awards))
+    .catch(error => next(error));
+}
 
-  awards.save()
-    .then(comment => res.status(201).json(comment))
+module.exports.get = (req, res, next) => {
+  Award.findById({ user: req.params.userId, _id: req.params.id })
+    .populate('user')
+    .then(award => {
+      if (!award) {
+        throw createError(404, 'awar dnot found');
+      } else {
+        res.json(award);
+      }
+    })
+    .catch(error => {
+      next(error);
+    });
+}
+
+
+module.exports.create = (req, res, next) => {
+  const award = new Award(req.body);
+  award.user = req.user.id;
+
+  if (req.files) {
+    award.image = [];
+    for (const file of req.files) {
+      award.image.push(`${req.protocol}://${req.get('host')}/uploads/${file.filename}`);
+    }
+  }
+
+
+  Awards.save()
+    .then(award => res.status(201).json(award))
     .catch(error => next(error));
 }
 
 module.exports.delete = (req, res, next) => {
-  Awards.findOneAndDelete({ user: req.user.id, _id: req.params.id })
-    .then(awards => {
-      if (!awards) {
-        throw createError(404, 'Comment not found');
+  Award.findOneAndDelete({ user: req.params.userId, _id: req.params.id })
+    .then(award => {
+      if (!award) {
+        throw createError(404, 'Award not found');
       } else {
         res.status(204).json();
       }
     })
     .catch(error => next(error));
 }
-
-module.exports.list = (req, res, next) => {
-    Awards.find({ user: mongoose.Types.ObjectId(req.params.userId) })
-      .then(awards => res.json(awards))
-      .catch(error => next(error));

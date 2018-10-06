@@ -11,6 +11,7 @@ module.exports.create = (req, res, next) => {
         if (error) {
           next(error);
         } else {
+          console.log("log in");
           res.status(201).json(user);
         }
       })
@@ -19,6 +20,7 @@ module.exports.create = (req, res, next) => {
 }
 
 module.exports.delete = (req, res, next) => {
+  console.log("log out");
   req.logout();
   res.status(204).json();
 }

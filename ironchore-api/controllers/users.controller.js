@@ -36,8 +36,8 @@ module.exports.create = (req, res, next) => {
 module.exports.delete = (req, res, next) => {
   Promise.all([
     User.findByIdAndDelete(req.user.id),
-    Post.deleteMany({ user: mongoose.Types.ObjectId(req.params.userId)}),
-    Comment.deleteMany({ user: mongoose.Types.ObjectId(req.params.userId)})])
+    Chores.deleteMany({ user: mongoose.Types.ObjectId(req.params.userId)}),
+    Awards.deleteMany({ user: mongoose.Types.ObjectId(req.params.userId)})])
     .then(([user]) => {
       if (!user) {
         throw createError(404, 'User not found');

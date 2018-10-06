@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const users = require('../controllers/user.controller');
+const users = require('../controllers/users.controller');
+const secure = require('../middleware/secure.middleware');
+const user = require('../middleware/user.middleware');
+
 
 router.post('/', users.create);
 router.get('/', secure.isAuthenticated, users.list);

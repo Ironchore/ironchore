@@ -1,26 +1,23 @@
 const mongoose = require("mongoose");
 
-const kidSchema = new mongoose.Schema(
+const awardsSchema = new mongoose.Schema(
   {
-    name: {
+    titleAwards: {
       type: String,
-      required: true
+      required: [true, "The title is required"]
     },
-    points: {
-      type: Number
+    awardsPoints: {
+      type: Number,
+      required: "The Points is required"
     },
-    avatar: {
-      type: String
+    images: {
+      type: [String],
+      default: []
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: [true, `needs a User`]
-    },
-
-    award: {
-      type: mongoose.Schema.Types.ObjectId,
-      default: []
+      required: [true, `needs an user`]
     }
   },
   {
@@ -37,5 +34,5 @@ const kidSchema = new mongoose.Schema(
   }
 );
 
-const Kid = mongoose.model("Kid", kidSchema);
-module.exports = Kid;
+const Award = mongoose.model("Award", awardsSchema);
+module.exports = Award;
