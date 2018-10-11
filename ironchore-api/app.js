@@ -43,7 +43,8 @@ app.use('/users', usersRouter);
 app.use('/sessions', sessionsRouter);
 app.use('/kids', kidsRouter);
 app.use('/chores', choresRouter);
-app.use('/awards', awardsRouter);
+app.use('/chores/:choreId/homework', kidsRouter);
+//app.use('/awards', awardsRouter);
 
 
 // catch 404 and forward to error handler

@@ -4,14 +4,13 @@ const createError = require('http-errors');
 
 module.exports.list = (req, res, next) => {
   User.find()
-  .populate({ path: 'user', select: 'id' })
-  .then(users => res.json(users))
-  .catch(error => next(error));
+    .then(users => res.json(users))
+    .catch(error => next(error));
 }
 
 module.exports.get = (req, res, next) => {
   User.findById(req.params.id)
-    .populate('user')
+    .populate('tutor')
     .then(user => res.json(user))
     .catch(error => next(error));
 }
@@ -23,11 +22,16 @@ module.exports.create = (req, res, next) => {
       throw createError(409, `User wtih email ${req.body.email} already exists`);
     } else {
       user = new User(req.body);
+      if (req.isAuthenticated() && !req.user.tutor) {
+        user.tutor = req.user._id;
+      } else {
+        throw createError(400, `Kinds can't creare more kids :D, be father my friend`);
+      }
       user.save()
-      .then(user => res.status(201).json(user))
-      .catch(error => {
-        next(error)
-      });
+        .then(user => res.status(201).json(user))
+        .catch(error => {
+          next(error)
+        });
     }
   })
   .catch(error => next(error));
@@ -35,9 +39,9 @@ module.exports.create = (req, res, next) => {
 
 module.exports.delete = (req, res, next) => {
   Promise.all([
-    User.findByIdAndDelete(req.user.id),
-    Chores.deleteMany({ user: mongoose.Types.ObjectId(req.params.userId)}),
-    Awards.deleteMany({ user: mongoose.Types.ObjectId(req.params.userId)})])
+    User.findByIdAndDelete(req.params.id),
+    Chores.deleteMany({ user: mongoose.Types.ObjectId(req.params.id)}),
+    Awards.deleteMany({ user: mongoose.Types.ObjectId(req.params.id)})])
     .then(([user]) => {
       if (!user) {
         throw createError(404, 'User not found');

@@ -13,21 +13,15 @@ const choresSchema = new mongoose.Schema(
       type: Number,
       required: "The Points is required"
     },
-    kid: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Kid",
-      enum: [],
-      required: [true, "Kid  is required"]
-    },
-    user: {
+    tutor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: [true, `needs a User`]
+      required: [true, `needs a Tutor`]
     }
   },
   {
     timestamps: true,
-    toObject: {
+    toJSON: {
       virtuals: true,
       transform: (doc, ret) => {
         ret.id = doc._id;

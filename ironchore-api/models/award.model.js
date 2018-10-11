@@ -12,7 +12,6 @@ const awardsSchema = new mongoose.Schema(
     },
     images: {
       type: [String],
-      default: []
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,

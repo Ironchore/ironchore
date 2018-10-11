@@ -11,10 +11,17 @@ const userSchema =  new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  tutor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
   }
 }, { 
   timestamps: true,
   toObject: {
+    virtuals: true
+  },
+  toJSON: {
     virtuals: true,
     transform: (doc, ret) => {
       ret.id = doc._id;
@@ -26,6 +33,11 @@ const userSchema =  new mongoose.Schema({
   }
 });
 
+userSchema
+  .virtual('avatar')
+  .get(function () {
+    return `https://api.adorable.io/avatars/285/${this._id}`;
+  });
 
 userSchema.pre('save', function save(next) {
   const user = this;

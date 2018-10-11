@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 module.exports.create = (req, res, next) => {
   const chore = new Chore(req.body);
   chore.user = req.user.id;
-  chore.kid = req.params.kidId;
 
   chore.save()
     .then(chore => res.status(201).json(chore))

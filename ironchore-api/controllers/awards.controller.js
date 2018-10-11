@@ -13,7 +13,7 @@ module.exports.get = (req, res, next) => {
     .populate('user')
     .then(award => {
       if (!award) {
-        throw createError(404, 'awar dnot found');
+        throw createError(404, 'awar not found');
       } else {
         res.json(award);
       }

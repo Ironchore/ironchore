@@ -23,18 +23,13 @@ module.exports.get = (req, res, next) => {
     });
 }
 
+// module.exports.newHomework = (req, res, next) => {
+
+// }
 
 module.exports.create = (req, res, next) => {
   const kid = new Kid(req.body);
   kid.user = req.user.id;
-
-  if (req.files) {
-    kid.avatar = [];
-    for (const file of req.files) {
-      kid.avatar.push(`${req.protocol}://${req.get('host')}/uploads/${file.filename}`);
-    }
-  }
-
 
   kid.save()
     .then(kid => res.status(201).json(kid))

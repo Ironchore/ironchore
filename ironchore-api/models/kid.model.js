@@ -6,21 +6,24 @@ const kidSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    password: {
+      type: String,
+      required: true
+    },
     points: {
-      type: Number
+      type: Number,
+      default: 0
     },
     avatar: {
       type: String
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: [true, `needs a User`]
+      ref: "User"
     },
 
-    award: {
+    awards: {
       type: mongoose.Schema.Types.ObjectId,
-      default: []
     }
   },
   {
