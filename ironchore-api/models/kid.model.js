@@ -19,7 +19,7 @@ const kidSchema = new mongoose.Schema(
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      ref: "Tutor"
     },
 
     awards: {

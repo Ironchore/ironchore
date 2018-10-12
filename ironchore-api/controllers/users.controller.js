@@ -23,7 +23,7 @@ module.exports.create = (req, res, next) => {
     } else {
       user = new User(req.body);
       if (req.isAuthenticated() && !req.user.tutor) {
-        user.tutor = req.user._id;
+        user.tutor = req.user.id;
       } else {
         throw createError(400, `Kinds can't creare more kids :D, be father my friend`);
       }

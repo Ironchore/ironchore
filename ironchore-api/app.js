@@ -43,7 +43,7 @@ app.use('/users', usersRouter);
 app.use('/sessions', sessionsRouter);
 app.use('/kids', kidsRouter);
 app.use('/chores', choresRouter);
-app.use('/chores/:choreId/homework', kidsRouter);
+app.use('/chores/:id/homework', kidsRouter);
 //app.use('/awards', awardsRouter);
 
 

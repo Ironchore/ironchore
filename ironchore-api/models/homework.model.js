@@ -14,8 +14,7 @@ const homeWorkSchema = new mongoose.Schema(
     },
     kid: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Kid",
-      required: [true, `needs a Kid`]
+      ref: "Kid"
     }
   },
   {

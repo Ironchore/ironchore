@@ -16,7 +16,6 @@ const choresSchema = new mongoose.Schema(
     tutor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: [true, `needs a Tutor`]
     }
   },
   {
