@@ -40,5 +40,26 @@ const kidSchema = new mongoose.Schema(
   }
 );
 
+userSchema.pre('save', function save(next) {
+  const user = this;
+  if (!user.isModified('password')) {
+    next();
+  } else {
+    bcrypt.genSalt(SALT_WORK_FACTOR)
+      .then(salt => {
+        return bcrypt.hash(user.password, salt)
+      })
+      .then(hash => {
+        user.password = hash;
+        next();
+      })
+      .catch(error => next(error));
+  }
+  
+});
+
+userSchema.methods.checkPassword = function (password) {
+  return bcrypt.compare(password, this.password);
+};
 const Kid = mongoose.model("Kid", kidSchema);
 module.exports = Kid;

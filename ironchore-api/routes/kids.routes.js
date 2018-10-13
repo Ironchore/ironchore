@@ -11,3 +11,4 @@ router.get('/:id', secure.isAuthenticated, kids.get);
 router.delete('/:id', secure.isAuthenticated, user.isMe('userId'), kids.delete);
 
 module.exports = router;
+
