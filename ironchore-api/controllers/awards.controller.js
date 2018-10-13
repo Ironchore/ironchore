@@ -1,51 +1,36 @@
+
 const Award = require('../models/award.model');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
 
 module.exports.list = (req, res, next) => {
-  Award.find({ user: mongoose.Types.ObjectId(req.params.userId) })
+  const criterial = {}
+  if (!req.user.tutor) {
+    criterial.tutor = req.user.id;
+  } else {
+    criterial.tutor = req.user.tutor;
+  }
+
+  Award.find(criterial)
+    .populate({ path: 'awards', populate: { path: 'user' } })
     .then(awards => res.json(awards))
     .catch(error => next(error));
 }
 
-module.exports.get = (req, res, next) => {
-  Award.findById({ user: req.params.userId, _id: req.params.id })
-    .populate('user')
-    .then(award => {
-      if (!award) {
-        throw createError(404, 'awar not found');
-      } else {
-        res.json(award);
-      }
-    })
-    .catch(error => {
-      next(error);
-    });
-}
-
-
 module.exports.create = (req, res, next) => {
   const award = new Award(req.body);
-  award.user = req.user.id;
+  award.tutor = req.user.id;
 
-  if (req.files) {
-    award.image = [];
-    for (const file of req.files) {
-      award.image.push(`${req.protocol}://${req.get('host')}/uploads/${file.filename}`);
-    }
-  }
-
-
-  Awards.save()
+  award.save()
     .then(award => res.status(201).json(award))
     .catch(error => next(error));
 }
 
 module.exports.delete = (req, res, next) => {
-  Award.findOneAndDelete({ user: req.params.userId, _id: req.params.id })
+  Chore.findOneAndDelete({ tutor: req.user.id, _id: req.params.id })
     .then(award => {
       if (!award) {
-        throw createError(404, 'Award not found');
+        throw createError(404, 'Awards not found');
       } else {
         res.status(204).json();
       }
