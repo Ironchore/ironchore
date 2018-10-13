@@ -12,3 +12,19 @@ module.exports.isMe = (param = 'id') => {
     }
   }
 }
+
+module.exports.isTutor = (req, res, next) => {
+  if (req.isAuthenticated() && !req.user.tutor) {
+    next();
+  } else {
+    throw createError(401, 'You are kid and needs be tutor');
+  }
+}
+
+module.exports.isKid = (req, res, next) => {
+  if (req.isAuthenticated() && req.user.tutor) {
+    next();
+  } else {
+    throw createError(401, 'You are tutor and needs be kid');
+  }
+}

@@ -4,13 +4,13 @@ const mongoose = require('mongoose');
 
 
 module.exports.list = (req, res, next) => {
-  Homework.find()
-    .then(kid => res.json(kid))
+  Homework.find({ kid: req.user.id })
+    .then(homework => res.json(homework))
     .catch(error => next(error));
 }
 
 module.exports.get = (req, res, next) => {
-  Homework.findById({ kid: req.params.id, _id: req.params.id })
+  Homework.findOne({ kid: req.user.id, _id: req.params.id })
     .populate('kid')
     .then(homework => {
       if (!homework) {
@@ -19,17 +19,35 @@ module.exports.get = (req, res, next) => {
         res.json(homework);
       }
     })
-    .catch(error => {
-      next(error);
-    });
+    .catch(error => next(error));
 }
 
 module.exports.create = (req, res, next) => {
-  const homework = new Homework(req.body);
-  homework.kid = req.kid.id;
+  const homework = new Homework({
+    chore: req.params.choreId,
+    kid: req.user.id
+  });
 
   homework.save()
     .then(homework => res.status(201).json(homework))
     .catch(error => next(error));
 }
 
+
+module.exports.update = (req, res, next) => {
+  Homework.findById(req.params.id)
+    .populate('kid')
+    .then(homework => {
+      console.log(homework);
+      if (!homework) {
+        throw createError(404, 'Homework not found');
+      } else if (homework.kid.tutor == req.user.id) {
+        homework.state = req.body.state || 'completed';
+        return homework.save();
+      } else {
+        throw createError(401, 'Not yours');
+      }
+    })
+    .then(homework => res.json(homework))
+    .catch(error => next(error));
+}

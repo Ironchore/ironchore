@@ -22,11 +22,14 @@ module.exports.create = (req, res, next) => {
       throw createError(409, `User wtih email ${req.body.email} already exists`);
     } else {
       user = new User(req.body);
-      if (req.isAuthenticated() && !req.user.tutor) {
-        user.tutor = req.user.id;
-      } else {
-        throw createError(400, `Kinds can't creare more kids :D, be father my friend`);
-      }
+      console.log(req.isAuthenticated());
+      if (req.isAuthenticated()) {
+        if (!req.user.tutor) {
+          user.tutor = req.user.id;
+        } else {
+          throw createError(400, `Kinds can't creare more kids :D, be father my friend`);
+        }
+      } 
       user.save()
         .then(user => res.status(201).json(user))
         .catch(error => {

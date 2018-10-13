@@ -2,27 +2,27 @@ const mongoose = require("mongoose");
 
 const awardsSchema = new mongoose.Schema(
   {
-    titleAwards: {
+    title: {
       type: String,
       required: [true, "The title is required"]
     },
-    awardsPoints: {
+    goal: {
       type: Number,
-      required: "The Points is required"
+      required: "The goal is required"
     },
     images: {
       type: [String],
+      defualt: []
     },
-    user: {
+    tutor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: [true, `needs an user`]
+      required: [true, `needs an tutor`]
     }
   },
   {
     timestamps: true,
-    toObject: {
-      virtuals: true,
+    toJSON: {
       transform: (doc, ret) => {
         ret.id = doc._id;
         delete ret._id;

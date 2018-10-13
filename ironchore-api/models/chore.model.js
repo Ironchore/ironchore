@@ -16,6 +16,7 @@ const choresSchema = new mongoose.Schema(
     tutor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true
     }
   },
   {
@@ -26,11 +27,23 @@ const choresSchema = new mongoose.Schema(
         ret.id = doc._id;
         delete ret._id;
         delete ret.__v;
+
+        if (!ret.homeworks) {
+          ret.homeworks = [];
+        }
+
         return ret;
       }
     }
   }
 );
+
+choresSchema.virtual('homeworks', {
+  ref: 'Homework',
+  localField: '_id',
+  foreignField: 'chore',
+  options: { sort: { createdAt: -1 } }
+});
 
 const Chores = mongoose.model("Chores", choresSchema);
 module.exports = Chores;

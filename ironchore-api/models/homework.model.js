@@ -14,13 +14,12 @@ const homeWorkSchema = new mongoose.Schema(
     },
     kid: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Kid"
+      ref: "User"
     }
   },
   {
     timestamps: true,
     toJSON: {
-      virtuals: true,
       transform: (doc, ret) => {
         ret.id = doc._id;
         delete ret._id;
@@ -31,5 +30,5 @@ const homeWorkSchema = new mongoose.Schema(
   }
 );
 
-const HomeWork = mongoose.model("HomeWork", homeWorkSchema);
+const HomeWork = mongoose.model("Homework", homeWorkSchema);
 module.exports = HomeWork;

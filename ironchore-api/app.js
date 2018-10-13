@@ -15,9 +15,9 @@ const corsConfig = require('./config/cors.config');
 
 const usersRouter = require('./routes/users.routes');
 const sessionsRouter = require('./routes/sessions.routes');
-const kidsRouter = require('./routes/kids.routes');
 const choresRouter = require('./routes/chores.routes');
 const awardsRouter = require('./routes/awards.routes')
+const homeworkRouter = require('./routes/homework.routes')
 
 
 app.use(logger('dev'));
@@ -41,9 +41,8 @@ app.use(passport.session());
 
 app.use('/users', usersRouter);
 app.use('/sessions', sessionsRouter);
-app.use('/kids', kidsRouter);
 app.use('/chores', choresRouter);
-app.use('/chores/:id/homework', kidsRouter);
+app.use('/chores/:choreId/homework', homeworkRouter);
 //app.use('/awards', awardsRouter);
 
 
