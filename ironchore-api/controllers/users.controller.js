@@ -3,7 +3,13 @@ const mongoose = require('mongoose');
 const createError = require('http-errors');
 
 module.exports.list = (req, res, next) => {
-  User.find()
+  const criterial = {}
+  if (!req.user.tutor) {
+    criterial.tutor = req.user.id;
+  } else {
+    criterial.tutor = req.user.tutor;
+  }
+  User.find(criterial)
     .then(users => res.json(users))
     .catch(error => next(error));
 }
