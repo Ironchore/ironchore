@@ -7,6 +7,11 @@ const homeWorkSchema = new mongoose.Schema(
       ref: "Chore",
       required: [true, `needs a chore`]
     },
+
+    title: {
+      type: String
+    },
+    
     state: {
       type: String,
       enum: ['pending', 'completed'],

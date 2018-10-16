@@ -1,4 +1,6 @@
 const Chore = require('../models/chore.model');
+const Homework = require('../models/homework.model');
+const User = require('../models/user.model');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
 
@@ -21,7 +23,20 @@ module.exports.create = (req, res, next) => {
   chore.tutor = req.user.id;
 
   chore.save()
-    .then(chore => res.status(201).json(chore))
+    .then(chore => {
+      User.find({ tutor: req.user.id }).then((kids) => {
+        Homework.create(
+          kids.map((kid) => {
+            return {
+              chore: chore.id,
+              kid: kid.id
+            }
+          })
+        ).then(() => {
+          res.status(201).json(chore)
+        })
+      })
+    })
     .catch(error => next(error));
 }
 

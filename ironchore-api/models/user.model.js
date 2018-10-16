@@ -14,9 +14,13 @@ const userSchema =  new mongoose.Schema({
   },
   
   name: {
-    type: String,
-    
+    type: String 
   },
+
+  points: {
+    type: Number,
+    default: 0
+  }, 
 
   password: {
     type: String,

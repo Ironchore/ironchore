@@ -42,7 +42,7 @@ app.use(passport.session());
 app.use('/users', usersRouter);
 app.use('/sessions', sessionsRouter);
 app.use('/chores', choresRouter);
-app.use('/chores/:choreId/homework', homeworkRouter);
+app.use('/homework', homeworkRouter);
 app.use('/awards', awardsRouter);
 
 
