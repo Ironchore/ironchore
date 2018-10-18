@@ -11,6 +11,7 @@ module.exports.list = (req, res, next) => {
 
 module.exports.get = (req, res, next) => {
   Prize.findOne({ kid: req.user.id, _id: req.params.id })
+    .populate('award')
     .populate('kid')
     .then(prize => {
       if (!prize) {

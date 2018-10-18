@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const awardsSchema = new mongoose.Schema(
+const awardSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -54,12 +54,13 @@ const awardsSchema = new mongoose.Schema(
   }
 );
 
-awardsSchema.virtual('chores', {
+awardSchema.virtual('chores', {
   ref: 'chore',
   localField: '_id',
   foreignField: 'chore',
   options: { sort: { createdAt: -1 } }
 });
-const Awards = mongoose.model("Awards", awardsSchema);
-module.exports = Awards;
+
+const Award = mongoose.model("Award", awardSchema);
+module.exports = Award;
 

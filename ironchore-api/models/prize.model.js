@@ -8,7 +8,7 @@ const prizeSchema = new mongoose.Schema(
     },
     state: {
       type: String,
-      enum: ['pending', 'Award won'],
+      enum: ['pending', 'won'],
       default: 'pending'
     },
     kid: {

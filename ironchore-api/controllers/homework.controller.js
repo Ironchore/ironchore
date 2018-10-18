@@ -2,9 +2,12 @@ const mongoose = require('mongoose');
 const createError = require('http-errors');
 const Homework = require('../models/homework.model');
 const Chore = require('../models/chore.model');
+const User = require('../models/user.model');
 
 module.exports.list = (req, res, next) => {
   Homework.find({ kid: req.user.id })
+    .populate('chore')
+    .populate('kid')
     .then(homework => res.json(homework))
     .catch(error => next(error));
 }
@@ -52,3 +55,35 @@ module.exports.update = (req, res, next) => {
     .then(homework => res.json(homework))
     .catch(error => next(error));
 }
+
+module.exports.complete = (req, res, next) => {
+  const homeworkId = req.params.id;
+
+  Homework.findByIdAndUpdate({_id: homeworkId}, {$set: {'state': 'completed'}})
+  .then(updatedHW => {
+    Chore.findById(updatedHW.chore)
+    .then(chore => {
+      User.findByIdAndUpdate({_id: req.user.id}, {$inc: {'points': chore.points}})
+      .then(updatedUser => {
+        res.json({"message": "Kid has completed " + chore.title + " and won " + chore.points});
+      })
+    })
+  })
+  .catch(err => next(error)); 
+}
+
+// module.exports.complete = (req, res, next) => {
+//   const prizeId = req.params.id;
+
+//   Prize.findByIdAndUpdate({_id: homeworkId}, {$set: {'state': 'won'}})
+//   .then(updatedPrize => {
+//     Award.findById(updatedPrize.award)
+//     .then(award => {
+//       User.findByIdAndUpdate({_id: req.user.id}, {$inc: {'points': -award.points}})
+//       .then(() => {
+//         res.json({"message": "Kid has bought award for " + award.points});
+//       })
+//     })
+//   })
+//   .catch(err => next(error)); 
+// }

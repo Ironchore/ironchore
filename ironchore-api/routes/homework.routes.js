@@ -8,6 +8,8 @@ const user = require('../middleware/user.middleware');
 router.get('/', secure.isAuthenticated, homework.list);
 router.post('/', secure.isAuthenticated, user.isKid, homework.create);
 router.put('/:id', secure.isAuthenticated, user.isTutor, homework.update);
+
 router.get('/:id', secure.isAuthenticated, homework.get);
+router.get('/:id/completeTask', secure.isAuthenticated, user.isKid, homework.complete)
 
 module.exports = router;
