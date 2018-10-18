@@ -16,8 +16,9 @@ const corsConfig = require('./config/cors.config');
 const usersRouter = require('./routes/users.routes');
 const sessionsRouter = require('./routes/sessions.routes');
 const choresRouter = require('./routes/chores.routes');
-const awardsRouter = require('./routes/awards.routes')
-const homeworkRouter = require('./routes/homework.routes')
+const awardsRouter = require('./routes/awards.routes');
+const homeworkRouter = require('./routes/homework.routes');
+const prizeRouter = require('./routes/prize.routes')
 
 
 app.use(logger('dev'));
@@ -44,6 +45,7 @@ app.use('/sessions', sessionsRouter);
 app.use('/chores', choresRouter);
 app.use('/homework', homeworkRouter);
 app.use('/awards', awardsRouter);
+app.use('/prize', prizeRouter);
 
 
 // catch 404 and forward to error handler

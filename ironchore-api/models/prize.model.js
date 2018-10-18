@@ -5,7 +5,6 @@ const prizeSchema = new mongoose.Schema(
     award: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Award",
-      required: [true, `needs a award`]
     },
     state: {
       type: String,

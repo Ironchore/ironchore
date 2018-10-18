@@ -1,7 +1,9 @@
-
 const Award = require('../models/award.model');
+const Prize = require('../models/prize.model');
+const User = require('../models/user.model');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
+
 
 module.exports.list = (req, res, next) => {
   const criterial = {}
@@ -12,7 +14,7 @@ module.exports.list = (req, res, next) => {
   }
 
   Award.find(criterial)
-    .populate({ path: 'awards', populate: { path: 'user' } })
+    .populate({ path: 'awards', populate: { path: 'kid' } })
     .then(awards => res.json(awards))
     .catch(error => next(error));
 }
@@ -22,7 +24,20 @@ module.exports.create = (req, res, next) => {
   award.tutor = req.user.id;
 
   award.save()
-    .then(award => res.status(201).json(award))
+    .then(award => {
+      User.find({ tutor: req.user.id }).then((kids) => {
+        Prize.create(
+          kids.map((kid) => {
+            return {
+              award: award.id,
+              kid: kid.id
+            }
+          })
+        ).then(() => {
+          res.status(201).json(award)
+        })
+      })
+    })
     .catch(error => next(error));
 }
 

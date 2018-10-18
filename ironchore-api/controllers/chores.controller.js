@@ -4,6 +4,7 @@ const User = require('../models/user.model');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
 
+
 module.exports.list = (req, res, next) => {
   const criterial = {}
   if (!req.user.tutor) {

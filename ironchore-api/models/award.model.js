@@ -15,11 +15,6 @@ const awardsSchema = new mongoose.Schema(
       ref: "Chore",
     },
 
-    points: {
-      type: Number,
-      required: "The Points is required"
-    },
-
     state: {
       type: String,
       enum: ['pending', 'completed'],

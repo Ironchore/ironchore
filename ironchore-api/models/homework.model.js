@@ -8,10 +8,6 @@ const homeWorkSchema = new mongoose.Schema(
       required: [true, `needs a chore`]
     },
 
-    title: {
-      type: String
-    },
-    
     state: {
       type: String,
       enum: ['pending', 'completed'],

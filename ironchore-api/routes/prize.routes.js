@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
-const homework = require('../controllers/homework.controller');
+const prize = require('../controllers/prize.controller');
 const secure = require('../middleware/secure.middleware');
 const user = require('../middleware/user.middleware');
 

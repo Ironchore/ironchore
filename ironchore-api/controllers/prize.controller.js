@@ -1,4 +1,4 @@
-const Homework = require('../models/prize.model');
+const Prize = require('../models/prize.model');
 const createError = require('http-errors');
 const mongoose = require('mongoose');
 
@@ -24,7 +24,7 @@ module.exports.get = (req, res, next) => {
 
 module.exports.create = (req, res, next) => {
   const prize = new Prize({
-    awards: req.params.awardsId,
+    award: req.params.awardId,
     kid: req.user.id
   });
 
