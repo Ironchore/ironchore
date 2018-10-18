@@ -1,10 +1,14 @@
-const Prize = require('../models/prize.model');
-const createError = require('http-errors');
 const mongoose = require('mongoose');
+const createError = require('http-errors');
+const Prize = require('../models/prize.model');
+const Award = require('../models/award.model');
+const User = require('../models/user.model');
 
 
 module.exports.list = (req, res, next) => {
   Prize.find({ kid: req.user.id })
+  .populate('award')
+  .populate('kid')
     .then(prize => res.json(prize))
     .catch(error => next(error));
 }
@@ -43,7 +47,7 @@ module.exports.update = (req, res, next) => {
       if (!prize) {
         throw createError(404, 'Prize not found');
       } else if (prize.kid.tutor == req.user.id) {
-        prize.state = req.body.state || 'Award won';
+        prize.state = req.body.state || 'won';
         return prize.save();
       } else {
         throw createError(401, 'Not yours');
@@ -51,4 +55,20 @@ module.exports.update = (req, res, next) => {
     })
     .then(prize => res.json(prize))
     .catch(error => next(error));
+}
+
+module.exports.complete = (req, res, next) => {
+  const prizeId = req.params.id;
+
+  Prize.findByIdAndUpdate({_id: prizeId}, {$set: {'state': 'won'}})
+  .then(updatedPrize => {
+    Award.findById(updatedPrize.award)
+    .then(award => {
+      User.findByIdAndUpdate({_id: req.user.id}, {$inc: {'points': -award.goal}})
+      .then(() => {
+        res.json({"message": "Kid has bought award for " + award.goal});
+      })
+    })
+  })
+  .catch(err => next(error));
 }

@@ -8,5 +8,6 @@ router.get('/', secure.isAuthenticated, prize.list);
 router.post('/', secure.isAuthenticated, user.isKid, prize.create);
 router.put('/:id', secure.isAuthenticated, user.isTutor, prize.update);
 router.get('/:id', secure.isAuthenticated, prize.get);
+router.get('/:id/wonPrize', secure.isAuthenticated, user.isKid, prize.complete);
 
 module.exports = router;
