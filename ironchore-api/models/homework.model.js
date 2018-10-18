@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const homeWorkSchema = new mongoose.Schema(
+const homeworkSchema = new mongoose.Schema(
   {
     chore: {
       type: mongoose.Schema.Types.ObjectId,
@@ -31,5 +31,5 @@ const homeWorkSchema = new mongoose.Schema(
   }
 );
 
-const HomeWork = mongoose.model("Homework", homeWorkSchema);
-module.exports = HomeWork;
+const Homework = mongoose.model("Homework", homeworkSchema);
+module.exports = Homework;

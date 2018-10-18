@@ -1,7 +1,7 @@
-const Homework = require('../models/homework.model');
-const createError = require('http-errors');
 const mongoose = require('mongoose');
-
+const createError = require('http-errors');
+const Homework = require('../models/homework.model');
+const Chore = require('../models/chore.model');
 
 module.exports.list = (req, res, next) => {
   Homework.find({ kid: req.user.id })
@@ -12,6 +12,7 @@ module.exports.list = (req, res, next) => {
 module.exports.get = (req, res, next) => {
   Homework.findOne({ kid: req.user.id, _id: req.params.id })
     .populate('kid')
+    .populate('chore')
     .then(homework => {
       if (!homework) {
         throw createError(404, 'Homework not found');

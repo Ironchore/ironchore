@@ -13,8 +13,8 @@ const userSchema =  new mongoose.Schema({
     unique: true
   },
   
-  name: {
-    type: String 
+  kidName: {
+    type: String,
   },
 
   points: {

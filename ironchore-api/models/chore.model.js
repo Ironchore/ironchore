@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const choresSchema = new mongoose.Schema(
+const choreSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -38,12 +38,13 @@ const choresSchema = new mongoose.Schema(
   }
 );
 
-choresSchema.virtual('homeworks', {
+choreSchema.virtual('homeworks', {
   ref: 'Homework',
   localField: '_id',
   foreignField: 'chore',
   options: { sort: { createdAt: -1 } }
 });
 
-const Chores = mongoose.model("Chores", choresSchema);
-module.exports = Chores;
+const Chore = mongoose.model("Chore", choreSchema);
+
+module.exports = Chore;
