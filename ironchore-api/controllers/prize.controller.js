@@ -57,6 +57,22 @@ module.exports.update = (req, res, next) => {
     .catch(error => next(error));
 }
 
+// module.exports.complete = (req, res, next) => {
+//   const prizeId = req.params.id;
+
+//   Prize.findByIdAndUpdate({_id: prizeId}, {$set: {'state': 'won'}})
+//   .then(updatedPrize => {
+//     Award.findById(updatedPrize.award)
+//     .then(award => {
+//       User.findByIdAndUpdate({_id: req.user.id}, {$inc: {'points': -award.goal}})
+//       .then(() => {
+//         res.json({"message": "Kid has bought award for " + award.goal});
+//       })
+//     })
+//   })
+//   .catch(err => next(error));
+// }
+
 module.exports.complete = (req, res, next) => {
   const prizeId = req.params.id;
 

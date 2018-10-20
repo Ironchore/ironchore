@@ -42,7 +42,7 @@ module.exports.create = (req, res, next) => {
 }
 
 module.exports.delete = (req, res, next) => {
-  Chore.findOneAndDelete({ tutor: req.user.id, _id: req.params.id })
+  Award.findOneAndDelete({ tutor: req.user.id, _id: req.params.id })
     .then(award => {
       if (!award) {
         throw createError(404, 'Awards not found');

@@ -10,10 +10,6 @@ const awardSchema = new mongoose.Schema(
       type: Number,
       required: "The goal is required"
     },
-    chore: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Chore",
-    },
 
     state: {
       type: String,
